@@ -14,42 +14,41 @@ class Solution {
         int len = nums.length;
 
         List<List<Integer>> result = new ArrayList<>();
+        result.add(new ArrayList());
 
-        Map<Integer, List<Set<Integer>>> map = new HashMap<>();
+        Map<Integer, List<List<Integer>>> resutMap = new HashMap<>();
 
         for (int i = 1; i <= len; i++) {
-            List<Set<Integer>> currentList = new ArrayList<>();
-            List<Set<Integer>> preList = map.get(i - 1);
-            map.put(i, currentList);
+            List<List<Integer>> currentList = new ArrayList<>();
+            List<List<Integer>> preList = resutMap.get(i - 1);
+            resutMap.put(i, currentList);
 
             for (int k = 0; k < len; k++) {
                 if (preList != null) {
-                    for (Set<Integer> tmpPreSet : preList) {
-                        if (!tmpPreSet.contains(nums[k])) {
-                            Set<Integer> currentSet = new HashSet<>();
-                            currentSet.addAll(tmpPreSet);
-                            currentSet.add(nums[k]);
-                            currentList.add(currentSet);
+                    for (List<Integer> tmpPreList : preList) {
+                        Set<Integer> set = new HashSet<>(tmpPreList);
+                        if (!set.contains(nums[k])) {
+                            int max = tmpPreList.get(tmpPreList.size() - 1);
+                            if (max < nums[k]) {
+                                List<Integer> tmpList = new ArrayList<>();
+                                tmpList.addAll(tmpPreList);
+                                tmpList.add(nums[k]);
+                                currentList.add(tmpList);
+                            }
                         }
                     }
                 } else { //对一次添加元素
-                    Set<Integer> currentSet = new HashSet<>();
-                    currentSet.add(nums[k]);
-                    currentList.add(currentSet);
+                    List<Integer> tmpList = new ArrayList<>();
+                    tmpList.add(nums[k]);
+                    currentList.add(tmpList);
                 }
-
             }
         }
 
-        for (List<Set<Integer>> list : map.values()) {
+        for (List<List<Integer>> list : resutMap.values()) {
 
-            for (Set<Integer> set : list) {
-                List<Integer> tmpList = new ArrayList<>();
-                tmpList.addAll(set);
-                result.add(tmpList);
-            }
+           result.addAll(list);
         }
-
 
         return result;
 
