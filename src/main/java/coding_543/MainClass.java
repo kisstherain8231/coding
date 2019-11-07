@@ -56,13 +56,12 @@ public class MainClass {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String line;
         //while ((line = in.readLine()) != null) {
-           line = "[1,2,3,4,5]";
+           //line = "[1,2,3,4,5]";
+           line = "[]";
             TreeNode root = stringToTreeNode(line);
 
             int ret = new Solution().diameterOfBinaryTree(root);
-
             String out = String.valueOf(ret);
-
             System.out.print(out);
         //}
     }
