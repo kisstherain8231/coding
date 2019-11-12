@@ -25,6 +25,8 @@ public class Solution {
         while (current != null) {
             if (set.contains(current)) {
                 return true;
+            } else {
+                set.add(current);
             }
             current = current.next;
         }
