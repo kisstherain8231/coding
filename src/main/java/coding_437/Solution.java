@@ -16,9 +16,10 @@ class TreeNode {
 
 public class Solution {
 
+    private int totalCount = 0;
+
     public int pathSum(TreeNode root, int sum) {
 
-        int count = 0;
         Deque<TreeNode> queue = new LinkedList<>();
 
         if (root == null) {
@@ -30,8 +31,7 @@ public class Solution {
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
             // 计算当前节点的左右路径的值
-            count = count + travelLeftVal(node, sum);
-            count = count + travelRightVal(node, sum);
+            travelValue(node, sum, 0);
 
             // left
             if (node.left != null) {
@@ -42,36 +42,21 @@ public class Solution {
             }
         }
 
-        return count;
+        return totalCount;
     }
 
-    public int travelLeftVal(TreeNode node, int target) {
-        int targetCount = 0;
-        int sum = 0;
-        TreeNode nextNode = node;
-        while (nextNode != null) {
-            sum = nextNode.val + sum;
-            if (sum == target) {
-                targetCount++;
-            }
-            nextNode = nextNode.left;
+
+    public void travelValue(TreeNode node, int target, int sum) {
+        if (node == null) {
+            return ;
         }
 
-        return targetCount;
-    }
-
-    public int travelRightVal(TreeNode node, int target) {
-        int targetCount = 0;
-        int sum = 0;
-        TreeNode nextNode = node;
-        while (nextNode != null) {
-            sum = nextNode.val + sum;
-            if (sum == target) {
-                targetCount++;
-            }
-            nextNode = nextNode.right;
+        sum = sum + node.val;
+        if (sum == target) {
+            totalCount = totalCount + 1;
         }
 
-        return targetCount;
+        travelValue(node.left, target, sum);
+        travelValue(node.right, target, sum);
     }
 }
