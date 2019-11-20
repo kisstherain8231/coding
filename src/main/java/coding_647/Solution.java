@@ -1,32 +1,29 @@
 package coding_647;
 
 class Solution {
+
     public int countSubstrings(String s) {
-        int result = 0;
-
-
-        result = doCountSubstrings(s);
-
-        return result;
-
-    }
-
-    int doCountSubstrings(String s) {
-        int result = 0;
-        int len  = s.length();
-
-        boolean dp [][] = new boolean[len][len];
-
-        for (int i = 1; i <= len; i++) { //回文长度
-            for (int k = 0; k < len; k++) {
-                if (dp[k + 1][k + i - 1]){
-
-                }
-                dp[k][k+i]
-            }
-
+        //dp[i][j]表示s[i...j]是否为回文字串。
+        boolean[][] dp = new boolean[s.length()][s.length()];
+        int ans = 0;
+        for (int i = 0; i < dp.length; i++) {
+            dp[i][i] = true;
+            ans++;
         }
-
-
+        for (int i = 1; i < dp.length; i++) {
+            if (s.charAt(i - 1) == s.charAt(i)) {
+                dp[i - 1][i] = true;
+                ans++;
+            }
+        }
+        for (int k = 2; k < s.length(); k++) {
+            for (int i = k; i < s.length(); i++) {
+                if (s.charAt(i - k) == s.charAt(i) && dp[i - k + 1][i - 1]) {
+                    dp[i - k][i] = true;
+                    ans++;
+                }
+            }
+        }
+        return ans;
     }
 }
