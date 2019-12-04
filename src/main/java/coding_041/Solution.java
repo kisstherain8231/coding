@@ -1,64 +1,23 @@
 package coding_041;
 
-public class Solution {
 
+public class Solution {
     public int firstMissingPositive(int[] nums) {
 
-        if (null == nums) {
-            return 1;
-        }
-
-        if(nums.length == 0) {
-            return 1;
-        }
-
-        if (nums.length == 1) {
-            if (nums[0] <= 0 ) {
-                return 1;
-            } else if (nums[0]  == 1){
-                return 2;
-            } else {
-                return 1;
+        for(int i = 0; i < nums.length; i++){
+            while(nums[i] > 0 && nums[i] <= nums.length && nums[i] != nums[nums[i] - 1]){
+                // 必须先判断完nums[ i ] 的边界条件，否则会runtime error，原因是假如nums[ 1 ] == //8, 然而我们的数组只有5个元素，根本就不存在nums[ 8 - 1]
+                swap(nums, i, nums[i] - 1);
             }
         }
-        int max = nums[0];
-
-        int min = nums[0];
-        int sum = 0;
-
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] < min) {
-                min = nums[i];
-            }
-
-            if (nums[i] > max) {
-                max = nums[i];
-            }
-            sum = sum + nums[i];
+        for(int i = 0; i < nums.length; i++){
+            if(nums[i] != i+1 ) return i + 1;
         }
-
-        int targetSum = ((max - min + 1) * (min + max)) / 2;
-
-        if (max - min + 1 == nums.length) {
-            if (min == 0) {
-                return max + 1;
-            } else {
-                return 1;
-            }
-        } else {
-            if (min < 0) {
-                return targetSum - sum;
-            } else if (min > 0) {
-                if (min > 1) {
-                    return 1;
-                } else {
-                    return targetSum - sum;
-                }
-
-            } else { // min == 0
-                return targetSum - sum;
-            }
-        }
-
+        return nums.length + 1;
+    }
+    public void swap(int[] n, int i, int j){
+        int temp = n[i];
+        n[i] = n[j];
+        n[j] = temp;
     }
 }
