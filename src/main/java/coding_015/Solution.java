@@ -1,57 +1,60 @@
 package coding_015;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 public class Solution {
+
+    /**
+     * Sum（三个数的和）
+     *
+     * @param nums 输入的数组
+     * @return 运行结果
+     */
     public List<List<Integer>> threeSum(int[] nums) {
-
-        List<List<Integer>> list = new ArrayList<>();
-        int len  = nums.length;
-        int [][] [] matrix = new int[len][len] [len];
-        Set<String> set =new HashSet<>();
-
-        for (int i = 0; i < len; i++){
-            for (int j = 0; j < len; j++) {
-                for (int k = 0; k < len; k++) {
-                    if (i ==j || i==k || j == k) {
-                        continue;
-                    }else {
-                        int tmp = nums[i] + nums[j] + nums[k];
-
-                        if (tmp == 0) {
-
-                            StringBuilder stringBuilder = new StringBuilder();
-
-                            List<Integer> tmpList = new ArrayList<>();
-                            tmpList.add(nums[i]);
-                            tmpList.add(nums[j]);
-                            tmpList.add(nums[k]);
-
-                            Collections.sort(tmpList);
-
-                            stringBuilder.append(tmpList.get(0));
-                            stringBuilder.append(tmpList.get(1));
-                            stringBuilder.append(tmpList.get(2));
-
-                            if (set.contains(stringBuilder.toString())) {
-                                continue;
-                            } else {
-                                set.add(stringBuilder.toString());
-                                list.add(tmpList);
-                            }
-
+        List<List<Integer>> result = new LinkedList<>();
+        if (nums != null && nums.length > 2) {            // 先对数组进行排序
+            Arrays.sort(nums);            // i表示如果取第i个数作为结果
+            for (int i = 0; i < nums.length - 2; ) {                // 第二个数可能的起始位置
+                int j = i + 1;                // 第三个数可能是结束位置
+                int k = nums.length - 1;
+                while (j < k) {                    // 如果找到满足条件的解
+                    if (nums[j] + nums[k] == -nums[i]) {                        // 将结果加入到结果含集中
+                        List<Integer> list = new ArrayList<>(3);
+                        list.add(nums[i]);
+                        list.add(nums[j]);
+                        list.add(nums[k]);
+                        result.add(list);                        // 移动到下一个位置。找下一组解
+                        k--;
+                        j++;                        // 从左向右找第一个与之前处理的数不同的数的下标
+                        while (j < k && nums[j] == nums[j - 1]) {
+                            j++;
+                        }                        // 从右向左找第一个与之前处理的数不同的数的下标
+                        while (j < k && nums[k] == nums[k + 1]) {
+                            k--;
+                        }
+                    }                    // 和大于0
+                    else if (nums[j] + nums[k] > -nums[i]) {
+                        k--;                        // 从右向左找第一个与之前处理的数不同的数的下标
+                        while (j < k && nums[k] == nums[k + 1]) {
+                            k--;
+                        }
+                    }                    // 和小于0
+                    else {
+                        j++;                        // 从左向右找第一个与之前处理的数不同的数的下标
+                        while (j < k && nums[j] == nums[j - 1]) {
+                            j++;
                         }
                     }
+                }                // 指向下一个要处理的数
+                i++;                // 从左向右找第一个与之前处理的数不同的数的下标
+                while (i < nums.length - 2 && nums[i] == nums[i - 1]) {
+                    i++;
                 }
             }
         }
-
-
-
-        return list;
+        return result;
     }
 }
