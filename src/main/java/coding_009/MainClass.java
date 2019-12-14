@@ -10,6 +10,7 @@ public class MainClass {
 
         boolean result = solution.isPalindrome(121);
         System.out.println(result);
+
     }
 
 }
