@@ -39,10 +39,10 @@ public class Solution {
         }
 
         int i = 1;
-
         boolean same = true;
+        int min = Math.min(left.size(), right.size());
 
-        while (i < left.size() && i < right.size()) {
+        while (i < min) {
             if (!left.get(i).equals(right.get(i))) {
                 result =  left.get(i -1);
                 same = false;
@@ -52,12 +52,11 @@ public class Solution {
             i++;
         }
 
-
+        //全部查找完成，都是相同的
         if (same == true) {
-            int min = Math.min(left.size(), right.size());
+
             result = left.get(min -1);
         }
-
 
         return result;
     }
