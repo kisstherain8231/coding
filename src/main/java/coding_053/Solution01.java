@@ -4,43 +4,41 @@ import java.io.IOException;
 
 public class Solution01 {
     public int maxSubArray(int[] nums) {
-
         if (nums.length == 1) {
             return nums[0];
         }
+
         int max = nums[0];
-        //List<Integer> list = new ArrayList<>();
-        int subSum = nums[0];
+        int preContinueSubArrSum = nums[0];
+        int currContinueSubArrSum = nums[0];
 
-        int subArrSum = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            int currentVal = nums[i];
 
-        for (int i = 0; i < nums.length; i++) {
-            int tmp = nums[i];
-
-            if (tmp >= 0) {
-                if (subArrSum >= 0) {
-                    subArrSum = subArrSum + tmp;
+            if (currentVal >= 0) {
+                if (preContinueSubArrSum >= 0) {
+                    currContinueSubArrSum = preContinueSubArrSum + currentVal;
                 } else {
-                    subArrSum = tmp;
+                    currContinueSubArrSum = currentVal;
                 }
             } else {
-                if (subArrSum >= 0) {
-                    if (subArrSum + tmp >= 0) {
-                        subArrSum = subSum + tmp;
+                if (preContinueSubArrSum >= 0) {
+                    if (preContinueSubArrSum + currentVal >= 0) {
+                        currContinueSubArrSum = preContinueSubArrSum + currentVal;
                     } else {
-                        subArrSum = tmp;
+                        currContinueSubArrSum = currentVal;
                     }
 
                 } else {
-                    //maxSubArrSum
-                    subArrSum = tmp;
+                    currContinueSubArrSum = currentVal;
                 }
             }
 
-            if (max < subArrSum) {
-                max = subArrSum;
-            }
+            preContinueSubArrSum = currContinueSubArrSum;
 
+            if (max < currContinueSubArrSum) {
+                max = currContinueSubArrSum;
+            }
         }
 
         return max;
@@ -75,7 +73,7 @@ public class Solution01 {
 
             System.out.print(out);
         }*/
-        String line = "[-2,1,-3,4,-1,2,1,-5,4]";
+        String line = " [-2,1,-3,4,-1,2,1,-5,4]";
         //line = "[-2,1]";
         int[] nums = stringToIntegerArray(line);
 
