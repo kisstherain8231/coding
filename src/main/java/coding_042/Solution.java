@@ -3,12 +3,6 @@ package coding_042;
 public class Solution {
 
 
-    /**
-     * 状态机： 0 未知和平等的状态
-     *
-     * @param height
-     * @return
-     */
     public int trap(int[] height) {
         int result = 0;
         int len = height.length;
