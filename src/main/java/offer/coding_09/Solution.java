@@ -16,22 +16,22 @@ class CQueue {
     }
 
     public int deleteHead() {
+
         if (stack1.size() == 0) {
             return  -1;
         }
 
-        if (stack1.size() == 1) {
-            return stack1.pop();
+
+        while (!stack1.isEmpty()) {
+           Integer tmp = stack1.pop();
+            stack2.push(tmp);
+
         }
 
-        for (Integer e : stack1) {
-            stack2.push(e);
-        }
+        Integer result = stack2.pop();
 
-        Integer result = stack2.peek();
-
-        //恢复
-        for (Integer e : stack2) {
+        while (!stack2.isEmpty()) {
+            Integer e = stack2.pop();
             stack1.push(e);
         }
 
